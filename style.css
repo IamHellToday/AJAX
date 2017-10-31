@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+* {
+	font-family: 'Roboto', sans-serif;
+	text-align: center;
+	background-color: #9fd5f4;
+}
+
+header {
+	margin-top: 50px;
+	margin-bottom: 100px;
+}
+
+div.box {
+	margin-bottom: 75px;
+}
+
+/*
+ * Buttons div
+ */
+
+div.buttons i.fa-twitter {
+	font-size: 24px;
+	color: #1DA1F2;
+	background-color: #fff;
+}
+
+div.buttons button.trigger,
+div.buttons a.tweet {
+	box-shadow: 1px 1px 1px black;
+	border-radius: 10px;
+}
+
+div.buttons button.trigger {
+	border: none;
+	padding: 10px 20px;
+	background-color: #1DA1F2;
+	font-size: 18px;
+	margin-right: 1%;
+}
+
+div.buttons a.tweet {
+	text-decoration: none;
+	background-color: #fff;
+	padding: 15px 20px;
+	margin-left: 1%;
+}
+
+div.buttons button.trigger:hover,
+div.buttons a.tweet:hover {
+	cursor: pointer;
+	opacity: 0.8;
+}
