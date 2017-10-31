@@ -1,38 +1,43 @@
-var prefix = 'https://cors-anywhere.herokuapp.com/';
-var tweetLink = 'https://twitter.com/intent/tweet?text=';
-var quoteUrl = 'https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1';
+var url = 'https://restcountries.eu/rest/v1/name/';
+var countriesList = $('#countries');
 
+// Search click event
+$('#search').click(searchCountries);
 
-function createTweet(input) {
-	var data = input[0];
-
-	var quoteText = $(data.content).text().trim();
-	var quoteAuthor = data.title;
-	var tweetText = 'Quote of the day - ' + quoteText + ' Author: ' + quoteAuthor;
-
-	if (!quoteAuthor.length) {
-		quoteAuthor = 'Unknown author';
-	}
-
-	if (tweetText.length > 140) {
-		getQuote();
-	}
-	else {
-		var tweet = tweetLink + encodeURIComponent(tweetText);
-		$('.quote').text(quoteText);
-		$('.author').text('Author: ' + quoteAuthor);
-		$('.tweet').attr('href', tweet);
-	}
-}
-
-function getQuote() {
-	$.getJSON(prefix + quoteUrl, createTweet);
-	$.ajaxSetup({ cache: false });
-}
-
-$(document).ready(function() {
-	getQuote();
-	$('.trigger').click(function() {
-		getQuote();
-	})
+// Enter keypress event
+$('#country-name').bind('enterKey', function(e){
+	searchCountries();
 });
+
+$('#country-name').keyup(function(e){
+	if (e.keyCode === 13)
+	{
+		$(this).trigger('enterKey');
+	}
+});
+
+function searchCountries() {
+	var countryName = $('#country-name').val();
+
+	if (!countryName.length) {
+		countryName = 'Poland';
+	};
+
+	$.ajax({
+		url: url + countryName,
+		method: 'GET',
+		success: showCountriesList
+	});
+
+}
+
+function showCountriesList(resp) {
+	countriesList.empty();
+
+	resp.forEach(function(item) {
+		$('<li>').text('Country name: ' + item.name).appendTo(countriesList);
+		$('<li>').text('Country native name: ' + item.nativeName).appendTo(countriesList);
+		$('<li>').text('Capital name: ' + item.capital).appendTo(countriesList);
+		$('<li>').text('Currencies: ' + item.currencies).appendTo(countriesList);
+	});
+}
